@@ -2,5 +2,6 @@
 {
     public class TraceResult
     {
+        public IReadOnlyList<ThreadTraceResult> ThreadTraceResults { get; set; }
     }
 }
