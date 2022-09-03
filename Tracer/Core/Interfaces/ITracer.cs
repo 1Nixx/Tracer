@@ -7,12 +7,12 @@ using Core.Models;
 
 namespace Core.Interfaces
 {
-	internal interface ITracer
+	internal interface ITracer<T>
 	{
 		void StartTrace();
 
 		void StopTrace();
 
-		TraceResult GetTraceResult();
+		T GetTraceResult();
 	}
 }
