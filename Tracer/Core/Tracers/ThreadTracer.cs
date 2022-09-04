@@ -20,6 +20,7 @@ namespace Core.Tracers
 
 		public ThreadTracer(int threadId)
 		{
+			_methodTracers = new List<MethodTracer>();
 			_threadTraceResult = new ThreadTraceResult() { Id = threadId };
 		}	
 
@@ -35,10 +36,9 @@ namespace Core.Tracers
 			if (_nestingСounter == 0)
 			{
 				var methodTracer = new MethodTracer();
-				_methodTracers.Add(methodTracer);
-
-				_nestingСounter++;
+				_methodTracers.Add(methodTracer);		
 			}
+			_nestingСounter++;
 
 			_currentMethodTracer.StartTrace();
 		}

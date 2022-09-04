@@ -7,7 +7,7 @@ using Core.Models;
 
 namespace Core.Interfaces
 {
-	internal interface ITracer<T>
+	public interface ITracer<T>
 	{
 		void StartTrace();
 
