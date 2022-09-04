@@ -45,6 +45,7 @@ namespace Core.Tracers
 
 		public void StopTrace()
 		{
+			
 			_currentMethodTracer.StopTrace();
 			_nestingСounter--;
 		}

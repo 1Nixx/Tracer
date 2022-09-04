@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Core.Models;
 using Core.Tracers;
+using System.Diagnostics;
 
 
 var tracer = new Tracer();
@@ -30,7 +31,7 @@ class Test
 	{
 		tracer.StartTrace();
 		Thread.Sleep(100);
-		tracer.StopTrace(); 
+		tracer.StopTrace();
 	}
 
 	public void M2()
