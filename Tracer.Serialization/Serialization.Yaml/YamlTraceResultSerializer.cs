@@ -18,16 +18,11 @@ namespace Serialization.Json
 				.Build();
 			var yamlResult = serializer.Serialize(result);
 
-			UnicodeEncoding uniEncoding = new UnicodeEncoding();
-			using (MemoryStream ms = new MemoryStream())
+			using (var sw = new StreamWriter(to))
 			{
-				using (var sw = new StreamWriter(ms, uniEncoding))
-				{
 					sw.Write(yamlResult);
 					sw.Flush();
-					ms.Seek(0, SeekOrigin.Begin);
-				}
-			}
+			}	
 		}
 	}
 }
