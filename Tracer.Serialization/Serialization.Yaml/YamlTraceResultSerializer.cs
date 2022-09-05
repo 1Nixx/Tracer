@@ -15,7 +15,9 @@ namespace Serialization.Json
 			
 			var serializer = new SerializerBuilder()
 				.WithNamingConvention(CamelCaseNamingConvention.Instance)
+				.WithIndentedSequences()
 				.Build();
+
 			var yamlResult = serializer.Serialize(result);
 
 			using (var sw = new StreamWriter(to))

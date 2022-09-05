@@ -1,7 +1,11 @@
-﻿namespace Serialization.Models
+﻿using System.Xml.Serialization;
+
+namespace Serialization.Models
 {
+	[XmlRoot("root", IsNullable = true)]
     public class SerializationTraceResult
 	{
-		public IReadOnlyList<SerializationThreadTraceResult> Threads { get; set; }
+		[XmlElement("thread")]
+		public List<SerializationThreadTraceResult> Threads { get; set; }
 	}
 }

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Tracer\Serialization.Abstractions\Serialization.Abstractions.csproj" />
     <ProjectReference Include="..\Serialization.Models\Serialization.csproj" />
   </ItemGroup>
 

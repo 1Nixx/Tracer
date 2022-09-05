@@ -1,10 +1,5 @@
 ﻿using Core.Models;
 using Serialization.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Serialization
 {
@@ -17,7 +12,8 @@ namespace Serialization
 				throw new ArgumentNullException(nameof(data));
 
 			var destData = new SerializationTraceResult();
-			var threadList = new List<SerializationThreadTraceResult>();
+
+			destData.Threads = new List<SerializationThreadTraceResult>();
 			foreach (var item in data.ThreadTraceResults)
 			{
 				var threadResult = new SerializationThreadTraceResult()
@@ -26,32 +22,28 @@ namespace Serialization
 					Time = $"{item.ExecutionTime}ms"
 				};
 
-				var methodList = new List<SerializationMethodTraceResult>();
+				threadResult.Methods = new List<SerializationMethodTraceResult>();
 				foreach (var methodTrace in item.MethodTraceResults)
-					methodList.Add(GetSerMethotTraceresult(methodTrace));
+					threadResult.Methods.Add(GetSerializeMethodTraceResult(methodTrace));
 
-				threadResult.Methods = methodList;
-				threadList.Add(threadResult);
+				destData.Threads.Add(threadResult);
 			}
-			destData.Threads = threadList;
 			return destData;
 		}
 
-		private static SerializationMethodTraceResult GetSerMethotTraceresult(MethodTraceResult methodTrace)
+		private static SerializationMethodTraceResult GetSerializeMethodTraceResult(MethodTraceResult methodTrace)
 		{
 			var data = new SerializationMethodTraceResult()
 			{
-
 				Name = methodTrace.MethodName,
 				Class = methodTrace.ClassName,
 				Time = $"{methodTrace.ExecutionTime}ms"
 			};
 
-			var list = new List<SerializationMethodTraceResult>();
+			data.Methods = new List<SerializationMethodTraceResult>();
 			foreach (var innerMethod in methodTrace.InnerMethodTraceResults)
-				list.Add(GetSerMethotTraceresult(innerMethod));
+				data.Methods.Add(GetSerializeMethodTraceResult(innerMethod));
 
-			data.Methods = list;
 			return data;
 		}
 	}
