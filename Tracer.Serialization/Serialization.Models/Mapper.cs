@@ -5,16 +5,15 @@ namespace Serialization
 {
 	public static class Mapper
 	{
-
-		public static SerializationTraceResult MapToSerializationModel(this TraceResult data)
+		public static SerializationTraceResult MapToSerializationModel(this TraceResult traceResult)
 		{
-			if (data is null)
-				throw new ArgumentNullException(nameof(data));
+			if (traceResult is null)
+				throw new ArgumentNullException(nameof(traceResult));
 
-			var destData = new SerializationTraceResult();
+			var serializedTraceResult = new SerializationTraceResult();
 
-			destData.Threads = new List<SerializationThreadTraceResult>();
-			foreach (var item in data.ThreadTraceResults)
+			serializedTraceResult.Threads = new List<SerializationThreadTraceResult>();
+			foreach (var item in traceResult.ThreadTraceResults)
 			{
 				var threadResult = new SerializationThreadTraceResult()
 				{
@@ -26,25 +25,25 @@ namespace Serialization
 				foreach (var methodTrace in item.MethodTraceResults)
 					threadResult.Methods.Add(GetSerializeMethodTraceResult(methodTrace));
 
-				destData.Threads.Add(threadResult);
+				serializedTraceResult.Threads.Add(threadResult);
 			}
-			return destData;
+			return serializedTraceResult;
 		}
 
 		private static SerializationMethodTraceResult GetSerializeMethodTraceResult(MethodTraceResult methodTrace)
 		{
-			var data = new SerializationMethodTraceResult()
+			var newMethodTrace = new SerializationMethodTraceResult()
 			{
 				Name = methodTrace.MethodName,
 				Class = methodTrace.ClassName,
 				Time = $"{methodTrace.ExecutionTime}ms"
 			};
 
-			data.Methods = new List<SerializationMethodTraceResult>();
+			newMethodTrace.Methods = new List<SerializationMethodTraceResult>();
 			foreach (var innerMethod in methodTrace.InnerMethodTraceResults)
-				data.Methods.Add(GetSerializeMethodTraceResult(innerMethod));
+				newMethodTrace.Methods.Add(GetSerializeMethodTraceResult(innerMethod));
 
-			return data;
+			return newMethodTrace;
 		}
 	}
 }
