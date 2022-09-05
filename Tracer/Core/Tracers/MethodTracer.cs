@@ -1,30 +1,25 @@
 ﻿using Core.Interfaces;
 using Core.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Tracers
 {
 	internal class MethodTracer : ITracer<MethodTraceResult>
 	{
-		private readonly MethodTraceResult tracerResult;
-		private readonly int skip;
+		private MethodTraceResult tracerResult;
+		private readonly int _stackFrameNumber;
 
 		private List<MethodTracer> _innerMethodTracers { get; set; } 
 		private int _nestingСounter { get; set; } = 0;
 		private Stopwatch _stopwatch { get; }
 
-		public MethodTracer(int skip = 3)
+		public MethodTracer(int frameNumber = 3)
 		{
 			_stopwatch = new Stopwatch();
 			_innerMethodTracers = new List<MethodTracer>();
 			tracerResult = new MethodTraceResult();
 
-			this.skip = skip;
+			_stackFrameNumber = frameNumber;
 		}		
 
 		public MethodTraceResult GetTraceResult()
@@ -37,14 +32,14 @@ namespace Core.Tracers
 		{
 			if (_nestingСounter == 0)
 			{
-				var method = new StackFrame(skip).GetMethod();
+				var method = new StackTrace().GetFrame(_stackFrameNumber).GetMethod();
 				tracerResult.MethodName = method.Name;
 				tracerResult.ClassName = method.DeclaringType.Name;
 				_stopwatch.Start();
 			}
 			else if (_nestingСounter == 1)
 			{
-				var tracer = new MethodTracer(skip + 1);
+				var tracer = new MethodTracer(_stackFrameNumber + 1);
 				_innerMethodTracers.Add(tracer);
 				tracer.StartTrace();
 			}

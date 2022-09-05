@@ -8,7 +8,13 @@ namespace Serialization.Json
 	{
 		public void Serialize(TraceResult traceResult, Stream to)
 		{
-			JsonSerializer.Serialize(to, traceResult);
+			var result = Mapper.MapToSerializationModel(traceResult);
+			var options = new JsonSerializerOptions
+			{
+				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+				WriteIndented = true,
+			};
+			JsonSerializer.Serialize(to, result, options);
 		}
 	}
 }

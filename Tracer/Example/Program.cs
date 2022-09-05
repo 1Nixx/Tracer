@@ -1,8 +1,8 @@
 ﻿using Core.Interfaces;
 using Core.Models;
 using Core.Tracers;
-using System.Diagnostics;
-
+using Serialization.Abstractions;
+using System.Reflection;
 
 var tracer = new Tracer();
 var test = new Test(tracer);
@@ -14,8 +14,18 @@ var t1 = new Thread(() =>
 	test.M3();
 });
 t1.Start();
+
+var t2 = new Thread(() =>
+{
+	test.M1();
+	test.M2();
+	test.M3();
+});
+t2.Start();
 t1.Join();
+t2.Join();
 var a = tracer.GetTraceResult();
+
 Console.WriteLine();
 
 class Test

@@ -1,6 +1,6 @@
 ﻿using Core.Models;
 using Serialization.Abstractions;
-using System.Text.Json;
+using System.Xml.Serialization;
 
 namespace Serialization.Json
 {
@@ -8,7 +8,8 @@ namespace Serialization.Json
 	{
 		public void Serialize(TraceResult traceResult, Stream to)
 		{
-			JsonSerializer.Serialize(to, traceResult);
+			var result = Mapper.MapToSerializationModel(traceResult);
+			
 		}
 	}
 }
