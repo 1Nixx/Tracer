@@ -20,11 +20,9 @@ namespace Serialization.Json
 
 			var yamlResult = serializer.Serialize(result);
 
-			using (var sw = new StreamWriter(to))
-			{
-					sw.Write(yamlResult);
-					sw.Flush();
-			}	
+			using var sw = new StreamWriter(to);
+			sw.Write(yamlResult);
+			sw.Flush();	
 		}
 	}
 }

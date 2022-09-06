@@ -2,7 +2,7 @@
 
 namespace Serialization.Models
 {
-	[XmlRoot("root", IsNullable = true)]
+	[XmlRoot("root")]
     public class SerializationTraceResult
 	{
 		[XmlElement("thread")]

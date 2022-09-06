@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization.Yaml", "Seria
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization.Xml", "Serialization.Xml\Serialization.Xml.csproj", "{962DF0CF-E694-461E-960B-E009E47AA01F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization", "Serialization.Models\Serialization.csproj", "{9E354759-EAD0-478D-AD5A-41F1E26AFE92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization", "Serialization\Serialization.csproj", "{9E354759-EAD0-478D-AD5A-41F1E26AFE92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization.Abstractions", "..\Tracer\Serialization.Abstractions\Serialization.Abstractions.csproj", "{95948592-58CD-4D7D-8F70-24B23F9BC7AE}"
 EndProject

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization.Abstractions"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example", "Example\Example.csproj", "{69E0868F-C83E-4F58-AF5E-5C2DA8BE9492}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{87E48E62-B2A9-459E-8C69-14BA8E26E003}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{87E48E62-B2A9-459E-8C69-14BA8E26E003}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

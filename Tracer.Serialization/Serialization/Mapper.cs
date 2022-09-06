@@ -13,16 +13,16 @@ namespace Serialization
 			var serializedTraceResult = new SerializationTraceResult();
 
 			serializedTraceResult.Threads = new List<SerializationThreadTraceResult>();
-			foreach (var item in traceResult.ThreadTraceResults)
+			foreach (var threadTrace in traceResult.ThreadTraceResults)
 			{
 				var threadResult = new SerializationThreadTraceResult()
 				{
-					Id = item.Id,
-					Time = $"{item.ExecutionTime}ms"
+					Id = threadTrace.Id,
+					Time = $"{threadTrace.ExecutionTime}ms",
+					Methods = new List<SerializationMethodTraceResult>()
 				};
 
-				threadResult.Methods = new List<SerializationMethodTraceResult>();
-				foreach (var methodTrace in item.MethodTraceResults)
+				foreach (var methodTrace in threadTrace.MethodTraceResults)
 					threadResult.Methods.Add(GetSerializeMethodTraceResult(methodTrace));
 
 				serializedTraceResult.Threads.Add(threadResult);
@@ -36,10 +36,10 @@ namespace Serialization
 			{
 				Name = methodTrace.MethodName,
 				Class = methodTrace.ClassName,
-				Time = $"{methodTrace.ExecutionTime}ms"
+				Time = $"{methodTrace.ExecutionTime}ms",
+				Methods = new List<SerializationMethodTraceResult>()
 			};
 
-			newMethodTrace.Methods = new List<SerializationMethodTraceResult>();
 			foreach (var innerMethod in methodTrace.InnerMethodTraceResults)
 				newMethodTrace.Methods.Add(GetSerializeMethodTraceResult(innerMethod));
 
