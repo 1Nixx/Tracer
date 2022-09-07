@@ -1,10 +1,20 @@
-﻿namespace Core.Models
+﻿using System.Xml.Linq;
+
+namespace Core.Models
 {
 	public class MethodTraceResult
 	{
-		public string MethodName { get; set; }
-		public string ClassName { get; set; }
-		public long ExecutionTime { get; set; }
-		public IReadOnlyList<MethodTraceResult> InnerMethodTraceResults { get; set; }
+		public MethodTraceResult(string name, string className, long time, IReadOnlyList<MethodTraceResult> innerMethods)
+		{
+			MethodName = name;
+			ClassName = className;
+			ExecutionTime = time;
+			InnerMethodTraceResults = innerMethods;
+		}
+
+		public string MethodName { get; }
+		public string ClassName { get; }
+		public long ExecutionTime { get; }
+		public IReadOnlyList<MethodTraceResult> InnerMethodTraceResults { get; }
 	}
 }

@@ -15,7 +15,7 @@ namespace Core.Tracers
 
 		public TraceResult GetTraceResult()
 		{
-			return new TraceResult() { ThreadTraceResults = _threadTracers.Select(t => t.Value.GetTraceResult()).ToList() };
+			return new TraceResult(_threadTracers.Select(t => t.Value.GetTraceResult()).ToList());
 		}
 
 		public void StartTrace()

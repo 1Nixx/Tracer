@@ -6,10 +6,10 @@ namespace Core.Tracers
 {
 	internal class MethodTracer : ITracer<MethodTraceResult>
 	{
-		private MethodTraceResult tracerResult;
+		private readonly MethodInfo _methodInfo;	
 		private readonly int _stackFrameNumber;
 
-		private List<MethodTracer> _innerMethodTracers { get; set; } 
+		private List<MethodTracer> _innerMethodTracers { get; } 
 		private int _nestingСounter { get; set; } = 0;
 		private Stopwatch _stopwatch { get; }
 
@@ -17,15 +17,18 @@ namespace Core.Tracers
 		{
 			_stopwatch = new Stopwatch();
 			_innerMethodTracers = new List<MethodTracer>();
-			tracerResult = new MethodTraceResult();
+			_methodInfo = new MethodInfo();
 
 			_stackFrameNumber = frameNumber;
 		}		
 
 		public MethodTraceResult GetTraceResult()
 		{
-			tracerResult.InnerMethodTraceResults = _innerMethodTracers.Select(method => method.GetTraceResult()).ToList();
-			return tracerResult;
+			_methodInfo.InnerMethodTraceResults = _innerMethodTracers.Select(method => method.GetTraceResult()).ToList();
+
+			var traceResult = new MethodTraceResult(_methodInfo.MethodName, _methodInfo.ClassName, _methodInfo.ExecutionTime, _methodInfo.InnerMethodTraceResults);
+
+			return traceResult;
 		}
 
 		public void StartTrace()
@@ -33,8 +36,10 @@ namespace Core.Tracers
 			if (_nestingСounter == 0)
 			{
 				var method = new StackTrace().GetFrame(_stackFrameNumber).GetMethod();
-				tracerResult.MethodName = method.Name;
-				tracerResult.ClassName = method.DeclaringType.Name;
+
+				_methodInfo.MethodName = method.Name;
+				_methodInfo.ClassName = method.DeclaringType.Name;
+
 				_stopwatch.Start();
 			}
 			else if (_nestingСounter == 1)
@@ -54,12 +59,20 @@ namespace Core.Tracers
 			if (_nestingСounter == 1)
 			{
 				_stopwatch.Stop();
-				tracerResult.ExecutionTime = _stopwatch.ElapsedMilliseconds;
+				_methodInfo.ExecutionTime = _stopwatch.ElapsedMilliseconds;
 			}
 			else if (_nestingСounter > 1)
 				_innerMethodTracers.Last().StopTrace();
 
 			_nestingСounter--;
+		}
+
+		private class MethodInfo
+		{
+			public string MethodName { get; set; }
+			public string ClassName { get; set; }
+			public long ExecutionTime { get; set;  }
+			public List<MethodTraceResult> InnerMethodTraceResults { get; set; }
 		}
 	}
 }
