@@ -24,6 +24,9 @@ namespace Core.Tracers
 
 		public MethodTraceResult GetTraceResult()
 		{
+			if (_nestingСounter != 0)
+				throw new InvalidOperationException("Different amount of StartTrace and StopTrace");
+
 			_methodInfo.InnerMethodTraceResults = _innerMethodTracers.Select(method => method.GetTraceResult()).ToList();
 
 			var traceResult = new MethodTraceResult(_methodInfo.MethodName, _methodInfo.ClassName, _methodInfo.ExecutionTime, _methodInfo.InnerMethodTraceResults);
@@ -50,6 +53,8 @@ namespace Core.Tracers
 			}
 			else if (_nestingСounter > 1)
 				_innerMethodTracers.Last().StartTrace();
+			else
+				throw new InvalidOperationException("Different amount of StartTrace and StopTrace");
 
 			_nestingСounter++;
 		}
@@ -63,6 +68,8 @@ namespace Core.Tracers
 			}
 			else if (_nestingСounter > 1)
 				_innerMethodTracers.Last().StopTrace();
+			else
+				throw new InvalidOperationException("Different amount of StartTrace and StopTrace");
 
 			_nestingСounter--;
 		}
