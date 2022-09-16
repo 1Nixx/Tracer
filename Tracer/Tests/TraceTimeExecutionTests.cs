@@ -12,12 +12,12 @@ namespace Tests;
 public class TraceTimeExecutionTests
 {
 	private TestMethods _testMethods;
-	private Tracer _tracer;
+	private MainTracer _tracer;
 
 	[SetUp]
 	public void Setup()
 	{
-		_tracer = new Tracer();
+		_tracer = new MainTracer();
 		_testMethods = new TestMethods(_tracer);
 	}
 

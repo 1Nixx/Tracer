@@ -4,11 +4,11 @@ using System.Collections.Concurrent;
 
 namespace Core.Tracers
 {
-	public class Tracer : ITracer<TraceResult>
+	public class MainTracer : ITracer<TraceResult>
 	{
 		private ConcurrentDictionary<int, ThreadTracer> _threadTracers { get; set; }
 
-		public Tracer()
+		public MainTracer()
 		{
 			_threadTracers = new ConcurrentDictionary<int, ThreadTracer>();
 		}
